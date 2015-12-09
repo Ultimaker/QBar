@@ -6,6 +6,11 @@ cmake_minimum_required(VERSION 2.8.12)
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wall -std=c++11")
 
 set(SOURCES 
+src/System/Clock.cpp
+src/System/Variant.cpp
+src/System/UnicodeString.cpp
+src/DBus/DBus.cpp
+src/DBus/DBusPrinter.cpp
 src/Main.cpp
 )
 
