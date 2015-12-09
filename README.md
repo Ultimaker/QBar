@@ -1,0 +1,2 @@
+# QBar
+QR / barcode reader
