@@ -15,6 +15,7 @@ src/Main.cpp
 src/Image/ImageReaderSource.cpp
 src/Image/jpgd.cpp
 src/CurlRequest.cpp
+src/QRDetector.cpp
 )
 
 find_package(PkgConfig)
