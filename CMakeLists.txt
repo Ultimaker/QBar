@@ -13,8 +13,8 @@ src/DBus/DBus.cpp
 src/DBus/DBusPrinter.cpp
 src/Main.cpp
 src/Image/ImageReaderSource.cpp
-src/Image/lodepng.cpp
 src/Image/jpgd.cpp
+src/CurlRequest.cpp
 )
 
 find_package(PkgConfig)
@@ -23,7 +23,7 @@ pkg_check_modules(LIBDBUS REQUIRED dbus-1)
 include_directories(${CMAKE_SOURCE_DIR}/src ${LIBDBUS_INCLUDE_DIRS})
 
 add_executable(jedi-qbar ${SOURCES})
-target_link_libraries(jedi-qbar ${LIBDBUS_LIBRARIES} zxing)
+target_link_libraries(jedi-qbar ${LIBDBUS_LIBRARIES} zxing curl)
 
 include(CPackConfig.cmake)
 

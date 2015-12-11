@@ -14,6 +14,9 @@
 #include <zxing/MultiFormatReader.h>
 #include <zxing/ReaderException.h>
 
+#include "CurlRequest.h"
+#include "Image/jpgd.h"
+
 
 std::vector<zxing::Ref<zxing::Result> > decode(zxing::Ref<zxing::BinaryBitmap> image, zxing::DecodeHints hints)
 {
@@ -59,6 +62,7 @@ int read_image(zxing::Ref<zxing::LuminanceSource> source, bool hybrid) {
         cell_result = "std::exception: " + std::string(e.what());
         result_code = -5;
     }
+    std::cout << cell_result << std::endl;
 
     for (size_t i = 0; i < results.size(); i++)
     {
@@ -70,10 +74,22 @@ int read_image(zxing::Ref<zxing::LuminanceSource> source, bool hybrid) {
 int main(int argc, char** argv)
 {
     Clock elapsed_time;
-    zxing::Ref<zxing::LuminanceSource> source;
-    source = ImageReaderSource::create("test.jpg");
+    //zxing::Ref<zxing::LuminanceSource> source;
+    CurlRequest test("http://10.180.1.150:8080/?action=snapshot");
+
+
+    int width, height;
+    int size = 800 * 600 * 3;
+    int comps = 0;
+    zxing::ArrayRef<char> image;
+    char *buffer = reinterpret_cast<char*>(jpgd::decompress_jpeg_image_from_memory(reinterpret_cast<const unsigned char *>(test.getData().c_str()), size, &width, &height, &comps, 4));
+    image = zxing::ArrayRef<char>(buffer, 4 * width * height);
+    free(buffer);
+    zxing::Ref<zxing::LuminanceSource> source = zxing::Ref<zxing::LuminanceSource>(new ImageReaderSource(image, width, height, comps));
 
     int result = read_image(source, true);
+
+
     std::cout << result << std::endl;
     while(true)
     {

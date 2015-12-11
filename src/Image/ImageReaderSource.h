@@ -1,6 +1,5 @@
-// -*- mode:c++; tab-width:2; indent-tabs-mode:nil; c-basic-offset:2 -*-
-#ifndef __IMAGE_READER_SOURCE_H_
-#define __IMAGE_READER_SOURCE_H_
+#ifndef IMAGE_READER_SOURCE_H
+#define IMAGE_READER_SOURCE_H
 /*
  *  Copyright 2010-2011 ZXing authors
  *
@@ -17,24 +16,19 @@
  * limitations under the License.
  */
 
-#include <zxing/LuminanceSource.h>
+#include "zxing/LuminanceSource.h"
 
 class ImageReaderSource : public zxing::LuminanceSource {
 private:
-  typedef LuminanceSource Super;
+    const zxing::ArrayRef<char> image;
+    const int comps;
 
-  const zxing::ArrayRef<char> image;
-  const int comps;
-
-  char convertPixel(const char* pixel) const;
-
+    char convertPixel(const char* pixel) const;
 public:
-  static zxing::Ref<LuminanceSource> create(std::string const& filename);
+    ImageReaderSource(zxing::ArrayRef<char> image, int width, int height, int comps);
 
-  ImageReaderSource(zxing::ArrayRef<char> image, int width, int height, int comps);
-
-  zxing::ArrayRef<char> getRow(int y, zxing::ArrayRef<char> row) const;
-  zxing::ArrayRef<char> getMatrix() const;
+    zxing::ArrayRef<char> getRow(int y, zxing::ArrayRef<char> row) const;
+    zxing::ArrayRef<char> getMatrix() const;
 };
 
-#endif /* __IMAGE_READER_SOURCE_H_ */
+#endif //IMAGE_READER_SOURCE_H
