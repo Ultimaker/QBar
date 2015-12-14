@@ -18,17 +18,21 @@
 
 #include "zxing/LuminanceSource.h"
 
-class ImageReaderSource : public zxing::LuminanceSource {
-private:
-    const zxing::ArrayRef<char> image;
-    const int comps;
-
-    char convertPixel(const char* pixel) const;
+// This is a modified version of the ImageReaderSource as provided by ZXing.
+// I've simplified it so it only does what we absolutely need it to do.
+class ImageReaderSource : public zxing::LuminanceSource
+{
 public:
     ImageReaderSource(zxing::ArrayRef<char> image, int width, int height, int comps);
 
     zxing::ArrayRef<char> getRow(int y, zxing::ArrayRef<char> row) const;
     zxing::ArrayRef<char> getMatrix() const;
+
+private:
+    const zxing::ArrayRef<char> image;
+    const int comps;
+
+    char convertPixel(const char* pixel) const;
 };
 
 #endif //IMAGE_READER_SOURCE_H
